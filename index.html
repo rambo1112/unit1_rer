@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning Unit 1: Foundations</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMcAORTEllvUKWlZvROTqtF+87Goyj81UT4RIhJuLfTjySloAA" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlVwcjNcsNQpWgAIxUaFwkipV7kFbE/bUcG8aCKTCeOa0vyikzK/j1gGndc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white border-r border-slate-200 p-6 fixed h-full hidden lg:block">
+            <h1 class="text-xl font-bold text-slate-900 mb-2">DL Unit 1</h1>
+            <p class="text-sm text-slate-500 mb-8">Foundations of ML & NNs</p>
+            <nav id="nav-menu" class="space-y-2">
+                <a href="#intro-ml" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
+                    <i data-lucide="brain-circuit" class="w-4 h-4 mr-3"></i>
+                    Intro to ML
+                </a>
+                <a href="#linear-models" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
+                     <i data-lucide="ruler" class="w-4 h-4 mr-3"></i>
+                    Linear Models
+                </a>
+                <a href="#intro-nn" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
+                     <i data-lucide="network" class="w-4 h-4 mr-3"></i>
+                    Intro to NNs
+                </a>
+                <a href="#training" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
+                     <i data-lucide="settings-2" class="w-4 h-4 mr-3"></i>
+                    Training a Network
+                </a>
+                <a href="#universal-approx" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
+                    <i data-lucide="infinity" class="w-4 h-4 mr-3"></i>
+                    Universal Approximation
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="lg:ml-64 flex-1 p-4 sm:p-6 md:p-10">
+            <header class="mb-10">
+                <p class="text-sm text-indigo-600 font-semibold">AKTU Deep Learning Course</p>
+                <h1 class="text-4xl font-extrabold text-slate-900 mt-2">Unit 1: Foundations of Machine Learning and Neural Networks</h1>
+                <p class="text-slate-500 mt-4 max-w-3xl">This guide covers the fundamental concepts that form the bedrock of deep learning, from classic linear models to the mechanics of how a simple neural network learns.</p>
+            </header>
+
+            <!-- Section 1: Intro to ML -->
+            <section id="intro-ml" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">1. Introduction to Machine Learning</h2>
+                <p class="mb-6">Machine Learning (ML) is a subfield of AI that gives computers the ability to learn from data without being explicitly programmed. It focuses on building algorithms that can identify patterns, make predictions, and improve with experience.</p>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Supervised Learning -->
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2 mr-4">
+                               <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900">Supervised Learning</h3>
+                        </div>
+                        <p class="text-slate-600 mb-4">The algorithm learns from a labeled dataset, where each data point is tagged with a correct output. The goal is to learn a mapping function to predict outputs for new data.</p>
+                        <p class="text-sm font-semibold text-slate-700">Examples: Spam detection, house price prediction.</p>
+                    </div>
+
+                    <!-- Unsupervised Learning -->
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2 mr-4">
+                               <i data-lucide="search-code" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900">Unsupervised Learning</h3>
+                        </div>
+                        <p class="text-slate-600 mb-4">The algorithm works with an unlabeled dataset to find hidden patterns or structures. There are no correct answers to learn from.</p>
+                        <p class="text-sm font-semibold text-slate-700">Examples: Customer segmentation, anomaly detection.</p>
+                    </div>
+
+                    <!-- Reinforcement Learning -->
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-purple-100 text-purple-600 rounded-full p-2 mr-4">
+                               <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-slate-900">Reinforcement Learning</h3>
+                        </div>
+                        <p class="text-slate-600 mb-4">An agent learns to make decisions by performing actions in an environment to maximize a cumulative reward. It learns through trial and error.</p>
+                        <p class="text-sm font-semibold text-slate-700">Examples: Game playing (Chess, Go), robotics.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Linear Models -->
+            <section id="linear-models" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">2. Linear Models</h2>
+                <p class="mb-8">Linear models are the building blocks of machine learning. They create a decision boundary by making a linear combination of the input features. Let's explore the three key types.</p>
+
+                <!-- Perceptron -->
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm mb-8">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">a) The Perceptron</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="mb-4">The earliest and simplest algorithm for binary classification. It's the conceptual basis for a single neuron. It learns by correcting its mistakes on linearly separable data.</p>
+                            <p class="mb-4"><span class="font-semibold text-slate-800">Mechanism:</span> It calculates a weighted sum of inputs and applies a step function. If the sum `\(z\)` is above a threshold, it outputs 1; otherwise, 0.</p>
+                            <div class="bg-slate-100 p-4 rounded-md">
+                                <p class="font-mono text-sm">Linear Combination: `\(z = \mathbf{w} \cdot \mathbf{x} + b\)`</p>
+                                <p class="mt-2">Activation (Step Function):
+                                    `\[\hat{y} = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{otherwise} \end{cases}\]`
+                                </p>
+                            </div>
+                             <p class="mt-4"><span class="font-semibold text-slate-800">Learning Rule:</span> If a point is misclassified, weights are updated to move the boundary.</p>
+                             <div class="bg-slate-100 p-4 rounded-md">`\(w_{i}(\text{new}) = w_{i}(\text{old}) + \eta(y - \hat{y})x_{i}\)`</div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <!-- SVG Diagram for Perceptron -->
+                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="perceptron-title">
+                                <title id="perceptron-title">Perceptron Diagram</title>
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b" /></marker>
+                                </defs>
+                                <!-- Inputs -->
+                                <text x="10" y="25" font-size="10" fill="#475569">`\(x_1\)`</text>
+                                <line x1="25" y1="22" x2="75" y2="45" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="50" y="35" font-size="8" fill="#475569">`\(w_1\)`</text>
+                                
+                                <text x="10" y="75" font-size="10" fill="#475569">`\(x_2\)`</text>
+                                <line x1="25" y1="72" x2="75" y2="72" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="50" y="65" font-size="8" fill="#475569">`\(w_2\)`</text>
+                                
+                                <text x="10" y="125" font-size="10" fill="#475569">`\(x_n\)`</text>
+                                <line x1="25" y1="122" x2="75" y2="95" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="50" y="115" font-size="8" fill="#475569">`\(w_n\)`</text>
+                                
+                                <!-- Neuron Body -->
+                                <circle cx="100" cy="75" r="25" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
+                                <text x="95" y="79" font-size="12" fill="#0c4a6e">Σ</text>
+                                
+                                <!-- Activation and Output -->
+                                <rect x="125" y="60" width="30" height="30" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/>
+                                <text x="130" y="80" font-size="10" fill="#0c4a6e">Step</text>
+                                <line x1="155" y1="75" x2="180" y2="75" stroke="#64748b" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="185" y="79" font-size="10" fill="#475569">`\(\hat{y}\)`</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SVM -->
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm mb-8">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">b) Support Vector Machines (SVM)</h3>
+                     <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                           <p class="mb-4">An SVM finds the "best" hyperplane that separates the data by maximizing the **margin**—the distance between the hyperplane and the nearest data points from each class.</p>
+                            <p class="mb-4"><span class="font-semibold text-slate-800">Core Idea:</span> Find the "widest street" that separates the classes. The data points on the edge of this street are called **support vectors**.</p>
+                            <p class="mb-4"><span class="font-semibold text-slate-800">Soft Margin:</span> For non-perfect data, a "soft margin" allows some misclassifications, controlled by a hyperparameter `\(C\)`.</p>
+                             <p class="mb-4"><span class="font-semibold text-slate-800">The Kernel Trick:</span> SVMs can solve non-linear problems by using kernels to project data into a higher dimension where it becomes linearly separable.</p>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <!-- SVG Diagram for SVM -->
+                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="svm-title">
+                                <title id="svm-title">SVM Maximum Margin Diagram</title>
+                                <!-- Margin boundaries -->
+                                <line x1="50" y1="10" x2="150" y2="140" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="20" y1="40" x2="120" y2="170" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4"/>
+                                <!-- Hyperplane -->
+                                <line x1="35" y1="25" x2="135" y2="155" stroke="#8b5cf6" stroke-width="2.5"/>
+                                <!-- Class 1 points -->
+                                <circle cx="70" cy="30" r="5" fill="#f87171"/>
+                                <circle cx="90" cy="50" r="5" fill="#f87171"/>
+                                <circle cx="110" cy="20" r="5" fill="#f87171"/>
+                                <!-- Class 2 points -->
+                                <circle cx="40" cy="110" r="5" fill="#60a5fa"/>
+                                <circle cx="60" cy="130" r="5" fill="#60a5fa"/>
+                                <circle cx="80" cy="100" r="5" fill="#60a5fa"/>
+                                <!-- Support Vectors -->
+                                <circle cx="85" cy="68" r="5" fill="#f87171" stroke="#be123c" stroke-width="2"/>
+                                <circle cx="75" cy="83" r="5" fill="#60a5fa" stroke="#1d4ed8" stroke-width="2"/>
+                                <!-- Margin Arrow -->
+                                <line x1="80" y1="75" x2="90" y2="65" stroke="#475569" stroke-width="1" marker-start="url(#arrowhead)" marker-end="url(#arrowhead)"/>
+                                <text x="95" y="65" font-size="8" fill="#475569">Margin</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logistic Regression -->
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">c) Logistic Regression</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                           <p class="mb-4">Despite its name, Logistic Regression is used for classification. It predicts the **probability** that an input belongs to a particular class.</p>
+                           <p class="mb-4"><span class="font-semibold text-slate-800">Mechanism:</span> It calculates a linear combination `\(z\)` and then passes it through the **Sigmoid (or Logistic) function** to squeeze the output between 0 and 1.</p>
+                           <div class="bg-slate-100 p-4 rounded-md">
+                                <p class="font-mono text-sm">Sigmoid Function: `\[ \hat{p} = \sigma(z) = \frac{1}{1 + e^{-z}} \]`</p>
+                           </div>
+                           <p class="mt-4"><span class="font-semibold text-slate-800">Loss Function:</span> It is trained by minimizing **Binary Cross-Entropy Loss**, which penalizes confident but incorrect predictions.</p>
+                           <div class="bg-slate-100 p-4 rounded-md">
+                                `\[L(\hat{y}, y) = -(y \log(\hat{y}) + (1-y) \log(1-\hat{y}))\]`
+                           </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                           <!-- SVG Diagram for Sigmoid -->
+                           <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="sigmoid-title">
+                                <title id="sigmoid-title">Sigmoid Function Curve</title>
+                                <!-- Axes -->
+                                <line x1="10" y1="75" x2="190" y2="75" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="185" y="85" font-size="8" fill="#475569">z</text>
+                                <line x1="100" y1="140" x2="100" y2="10" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <text x="105" y="20" font-size="8" fill="#475569">`\(\sigma(z)\)`</text>
+                                <!-- Horizontal lines for 0, 0.5, 1 -->
+                                <line x1="95" y1="10" x2="105" y2="10" stroke="#cbd5e1" stroke-width="1" />
+                                <text x="80" y="15" font-size="8" fill="#64748b">1.0</text>
+                                <line x1="95" y1="75" x2="105" y2="75" stroke="#cbd5e1" stroke-width="1" />
+                                <text x="80" y="80" font-size="8" fill="#64748b">0.5</text>
+                                <line x1="95" y1="140" x2="105" y2="140" stroke="#cbd5e1" stroke-width="1" />
+                                <text x="80" y="145" font-size="8" fill="#64748b">0.0</text>
+                                <!-- Sigmoid Curve -->
+                                <path d="M 10 138 C 50 138, 70 20, 100 75 S 150 12, 190 12" stroke="#ec4899" stroke-width="2.5" fill="none"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3: Intro to NNs -->
+            <section id="intro-nn" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">3. Intro to Neural Nets: What a Shallow Network Computes</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="mb-4">A neural network is a collection of interconnected "neurons" organized in layers. A **shallow neural network** has just one **hidden layer** between the input and output layers, but it's powerful enough to learn non-linear relationships.</p>
+                        <p class="mb-2"><span class="font-semibold text-slate-800">Architecture:</span></p>
+                        <ul class="list-disc list-inside space-y-1 mb-4 text-slate-600">
+                            <li><b>Input Layer:</b> Receives raw data features.</li>
+                            <li><b>Hidden Layer:</b> Computes non-linear combinations of inputs. Each neuron acts as a feature detector.</li>
+                            <li><b>Output Layer:</b> Produces the final prediction.</li>
+                        </ul>
+                        <p class="mb-4"><span class="font-semibold text-slate-800">Computation (Forward Propagation):</span></p>
+                        <p class="mb-2">1. <b>Input to Hidden:</b> Each hidden neuron `\(h_j\)` calculates its activation:</p>
+                        <div class="bg-slate-100 p-4 rounded-md mb-4">`\(h_j = f(\sum_{i} w_{ij}x_i + b_j)\)`</div>
+                        <p class="mb-2">2. <b>Hidden to Output:</b> The output neuron `\(\hat{y}\)` takes hidden activations as input:</p>
+                        <div class="bg-slate-100 p-4 rounded-md">`\(\hat{y} = g(\sum_{j} v_j h_j + c)\)`</div>
+                        <p class="mt-4 text-indigo-700 bg-indigo-50 p-4 rounded-md">The key is the non-linear activation function `\(f\)` (like ReLU or Sigmoid). Without it, the entire network would just be a simple linear model.</p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <!-- SVG for Shallow Neural Net -->
+                        <svg viewBox="0 0 200 150" class="w-full h-auto" aria-labelledby="nn-title">
+                            <title id="nn-title">Shallow Neural Network</title>
+                            <!-- Input Layer -->
+                            <text x="10" y="10" font-size="8" fill="#475569">Input</text>
+                            <circle cx="20" cy="40" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
+                            <circle cx="20" cy="75" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
+                            <circle cx="20" cy="110" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
+                            <!-- Hidden Layer -->
+                            <text x="85" y="10" font-size="8" fill="#475569">Hidden</text>
+                            <circle cx="100" cy="25" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
+                            <circle cx="100" cy="60" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
+                            <circle cx="100" cy="95" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
+                            <circle cx="100" cy="130" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
+                            <!-- Output Layer -->
+                            <text x="160" y="10" font-size="8" fill="#475569">Output</text>
+                            <circle cx="180" cy="75" r="8" fill="#fbcfe8" stroke="#ec4899" stroke-width="1.5"/>
+                            <!-- Connections -->
+                            <g stroke="#cbd5e1" stroke-width="0.5">
+                                <line x1="28" y1="40" x2="90" y2="25"/> <line x1="28" y1="40" x2="90" y2="60"/> <line x1="28" y1="40" x2="90" y2="95"/> <line x1="28" y1="40" x2="90" y2="130"/>
+                                <line x1="28" y1="75" x2="90" y2="25"/> <line x1="28" y1="75" x2="90" y2="60"/> <line x1="28" y1="75" x2="90" y2="95"/> <line x1="28" y1="75" x2="90" y2="130"/>
+                                <line x1="28" y1="110" x2="90" y2="25"/> <line x1="28" y1="110" x2="90" y2="60"/> <line x1="28" y1="110" x2="90" y2="95"/> <line x1="28" y1="110" x2="90" y2="130"/>
+                                <line x1="110" y1="25" x2="172" y2="75"/> <line x1="110" y1="60" x2="172" y2="75"/> <line x1="110" y1="95" x2="172" y2="75"/> <line x1="110" y1="130" x2="172" y2="75"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Training a Network -->
+            <section id="training" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">4. Training a Network</h2>
+                <p class="mb-8">Training a network means finding the optimal values for all its weights and biases to minimize prediction errors. This is an optimization problem solved using three key components.</p>
+                
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">a) Loss Functions</h3>
+                        <p>A loss function measures the error between the network's prediction and the true label. The goal of training is to minimize this value.</p>
+                        <div class="mt-4 grid sm:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-md">
+                                <h4 class="font-semibold text-slate-800">Mean Squared Error (MSE)</h4>
+                                <p class="text-sm text-slate-600">For regression tasks.</p>
+                                `\[ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]`
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-md">
+                                <h4 class="font-semibold text-slate-800">Cross-Entropy Loss</h4>
+                                <p class="text-sm text-slate-600">For classification tasks.</p>
+                                `\[ L = -\frac{1}{n} \sum_{i=1}^{n} [y_i \log(\hat{y}_i) + (1-y_i) \log(1-\hat{y}_i)] \]`
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">b) Backpropagation and Stochastic Gradient Descent (SGD)</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <p class="mb-4"><span class="font-semibold text-slate-800">Gradient Descent:</span> An optimization algorithm used to minimize the loss function. It works by iteratively taking small steps in the opposite direction of the gradient (the direction of steepest ascent).</p>
+                                <p class="mb-4"><span class="font-semibold text-slate-800">Stochastic Gradient Descent (SGD):</span> A faster version of gradient descent that approximates the gradient using a small, random "mini-batch" of data instead of the entire dataset for each step.</p>
+                                <p class="mb-4"><span class="font-semibold text-slate-800">Backpropagation:</span> The core algorithm that efficiently calculates the gradient of the loss with respect to every weight and bias in the network. It uses the chain rule of calculus, working backward from the loss to determine each parameter's contribution to the error.</p>
+                                <div class="bg-slate-100 p-4 rounded-md">Weight Update Rule: `\[ \mathbf{W}_{\text{new}} = \mathbf{W}_{\text{old}} - \eta \nabla_{\mathbf{W}}L \]`
+                                <p class="text-xs text-slate-500 mt-2">Where `\(\eta\)` is the learning rate and `\(\nabla_{\mathbf{W}}L\)` is the gradient.</p>
+                                </div>
+                            </div>
+                             <div class="flex items-center justify-center">
+                                <!-- SVG for Gradient Descent -->
+                               <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="gd-title">
+                                    <title id="gd-title">Gradient Descent Optimization</title>
+                                    <path d="M 10 100 Q 50 120, 100 50 T 190 110" stroke="#a5b4fc" stroke-width="2" fill="none"/>
+                                    <path d="M 10 100 Q 50 120, 100 50" stroke="#818cf8" stroke-width="2" fill="none"/>
+                                    <circle cx="30" cy="105" r="4" fill="#ef4444"/>
+                                    <line x1="30" y1="105" x2="55" y2="90" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                                    <circle cx="55" cy="90" r="4" fill="#ef4444"/>
+                                    <line x1="55" y1="90" x2="75" y2="70" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                                    <circle cx="75" cy="70" r="4" fill="#ef4444"/>
+                                    <line x1="75" y1="70" x2="90" y2="55" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                                    <circle cx="90" cy="55" r="4" fill="#ef4444"/>
+                                    <circle cx="100" cy="50" r="5" fill="#16a34a"/>
+                                    <text x="105" y="48" font-size="8" fill="#16a34a">Minimum Loss</text>
+                                    <text x="10" y="140" font-size="8" fill="#475569">Parameter Space (Weights)</text>
+                                    <text x="10" y="20" font-size="8" fill="#475569" transform="rotate(-90 10,20)">Loss</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 5: Universal Approximation -->
+            <section id="universal-approx" class="scroll-mt-20">
+                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">5. Neural Networks as Universal Function Approximators</h2>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-4">The Universal Approximation Theorem</h3>
+                            <p class="mb-4">This is a profound theoretical result. It states that a shallow neural network with a single hidden layer and a non-linear activation function can approximate any continuous function to any desired degree of accuracy, given enough neurons.</p>
+                            <p class="font-semibold text-slate-800 mb-2">Significance:</p>
+                            <ul class="list-disc list-inside space-y-1 mb-4 text-slate-600">
+                                <li>It guarantees that a neural network is powerful enough to learn virtually any complex relationship.</li>
+                                <li>It justifies the use of neural networks for a wide range of problems.</li>
+                                <li>It separates capability (what the network *can* do) from training (how to make it do it).</li>
+                            </ul>
+                            <p class="mt-4 text-indigo-700 bg-indigo-50 p-4 rounded-md"><b>Why go deep?</b> While a shallow network *can* learn any function, it might need an astronomical number of neurons. Deep networks can learn the same functions more efficiently with fewer total neurons by creating a hierarchy of features.</p>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <!-- SVG for Universal Approx -->
+                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="ua-title">
+                                <title id="ua-title">Universal Approximation Diagram</title>
+                                <!-- Target function -->
+                                <path d="M 10 75 C 40 10, 60 140, 100 75 S 160 10, 190 75" stroke="#9ca3af" stroke-width="2" stroke-dasharray="4" fill="none"/>
+                                <text x="130" y="30" font-size="8" fill="#6b7280">True Function</text>
+                                <!-- NN Approximation -->
+                                <path d="M 10 80 L 30 20 L 50 130 L 80 80 L 100 70 L 120 100 L 150 20 L 170 90 L 190 70" stroke="#4f46e5" stroke-width="2.5" fill="none"/>
+                                <text x="20" y="110" font-size="8" fill="#4338ca">NN Approximation</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <footer class="text-center mt-16 py-6 border-t border-slate-200 text-slate-500 text-sm">
+                <p>Study Guide generated for AKTU Deep Learning curriculum.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // KaTeX auto-rendering
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ]
+            });
+        });
+
+        // Active navigation link highlighting on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('#nav-menu a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-slate-100', 'text-slate-900', 'font-semibold');
+                const href = link.getAttribute('href').substring(1);
+                if (href === current) {
+                    link.classList.add('bg-slate-100', 'text-slate-900', 'font-semibold');
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>
+
+;
