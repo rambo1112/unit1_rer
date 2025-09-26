@@ -3,445 +3,474 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Learning Unit 1: Foundations</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Renewable Energy Resources - Unit 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- KaTeX for Math Rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMcAORTEllvUKWlZvROTqtF+87Goyj81UT4RIhJuLfTjySloAA" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlVwcjNcsNQpWgAIxUaFwkipV7kFbE/bUcG8aCKTCeOa0vyikzK/j1gGndc" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark Gray */
+            color: #d1d5db; /* Light Gray */
         }
-        /* Custom scrollbar for a better look */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .content-section {
+            border-left: 2px solid #374151; /* Medium Gray */
+            padding-left: 2rem;
+            margin-left: 1rem;
+            position: relative;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+        .content-section::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #3b82f6; /* Blue */
+            border-radius: 50%;
+            border: 4px solid #111827;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #64748b;
-            border-radius: 10px;
+        .nav-link {
+            transition: all 0.2s ease-in-out;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
+        .nav-link.active {
+            color: #3b82f6;
+            background-color: #1f2937;
+            border-right: 3px solid #3b82f6;
+            transform: translateX(-2px);
         }
-        .katex-display {
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 0.5rem 0;
+        .card {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        h2 {
+           font-size: 1.875rem;
+           line-height: 2.25rem;
+           margin-bottom: 1.5rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #93c5fd; /* Light Blue */
+        }
+        svg {
+            margin: 1.5rem auto;
+            display: block;
+        }
+        table {
+            width: 100%;
+            margin-top: 1.5rem;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+        th {
+            background-color: #374151;
+            color: #ffffff;
+        }
+        .merit { color: #4ade80; } /* Green */
+        .demerit { color: #f87171; } /* Red */
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="antialiased">
 
-    <div class="flex min-h-screen">
-        <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-white border-r border-slate-200 p-6 fixed h-full hidden lg:block">
-            <h1 class="text-xl font-bold text-slate-900 mb-2">DL Unit 1</h1>
-            <p class="text-sm text-slate-500 mb-8">Foundations of ML & NNs</p>
-            <nav id="nav-menu" class="space-y-2">
-                <a href="#intro-ml" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
-                    <i data-lucide="brain-circuit" class="w-4 h-4 mr-3"></i>
-                    Intro to ML
-                </a>
-                <a href="#linear-models" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
-                     <i data-lucide="ruler" class="w-4 h-4 mr-3"></i>
-                    Linear Models
-                </a>
-                <a href="#intro-nn" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
-                     <i data-lucide="network" class="w-4 h-4 mr-3"></i>
-                    Intro to NNs
-                </a>
-                <a href="#training" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
-                     <i data-lucide="settings-2" class="w-4 h-4 mr-3"></i>
-                    Training a Network
-                </a>
-                <a href="#universal-approx" class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-md transition-colors duration-200">
-                    <i data-lucide="infinity" class="w-4 h-4 mr-3"></i>
-                    Universal Approximation
-                </a>
+    <!-- Header -->
+    <header class="bg-gray-900 border-b border-gray-700 text-white text-center py-6 shadow-lg">
+        <h1 class="text-4xl font-bold tracking-tight">Renewable Energy Resources</h1>
+        <p class="text-lg text-gray-400 mt-1">Unit 1: Introduction & Solar Cells (AKTU Syllabus)</p>
+    </header>
+
+    <div class="flex flex-col md:flex-row max-w-screen-2xl mx-auto p-4 md:p-8 lg:p-12">
+
+        <!-- Sticky Navigation -->
+        <aside class="w-full md:w-1/4 lg:w-1/5 md:sticky top-8 self-start mb-8 md:mb-0">
+            <nav id="navbar" class="flex flex-col space-y-2">
+                <a href="#intro" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Introduction</a>
+                <a href="#availability" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Availability</a>
+                <a href="#classification" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Classification</a>
+                <a href="#merits-demerits" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Merits & Demerits</a>
+                <a href="#solar-theory" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Solar Cell Theory</a>
+                <a href="#solar-materials" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Solar Materials</a>
+                <a href="#solar-array" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Array & Power Plant</a>
+                <a href="#limitations" class="nav-link text-lg font-medium text-gray-300 hover:text-blue-500 hover:bg-gray-800 p-3 rounded-l-md">Limitations</a>
             </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="lg:ml-64 flex-1 p-4 sm:p-6 md:p-10">
-            <header class="mb-10">
-                <p class="text-sm text-indigo-600 font-semibold">AKTU Deep Learning Course</p>
-                <h1 class="text-4xl font-extrabold text-slate-900 mt-2">Unit 1: Foundations of Machine Learning and Neural Networks</h1>
-                <p class="text-slate-500 mt-4 max-w-3xl">This guide covers the fundamental concepts that form the bedrock of deep learning, from classic linear models to the mechanics of how a simple neural network learns.</p>
-            </header>
-
-            <!-- Section 1: Intro to ML -->
-            <section id="intro-ml" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">1. Introduction to Machine Learning</h2>
-                <p class="mb-6">Machine Learning (ML) is a subfield of AI that gives computers the ability to learn from data without being explicitly programmed. It focuses on building algorithms that can identify patterns, make predictions, and improve with experience.</p>
-                
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Supervised Learning -->
-                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                        <div class="flex items-center mb-3">
-                            <div class="bg-blue-100 text-blue-600 rounded-full p-2 mr-4">
-                               <i data-lucide="clipboard-check" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-slate-900">Supervised Learning</h3>
-                        </div>
-                        <p class="text-slate-600 mb-4">The algorithm learns from a labeled dataset, where each data point is tagged with a correct output. The goal is to learn a mapping function to predict outputs for new data.</p>
-                        <p class="text-sm font-semibold text-slate-700">Examples: Spam detection, house price prediction.</p>
+        <main class="w-full md:w-3/4 lg:w-4/5">
+            
+            <!-- Section: Introduction -->
+            <section id="intro" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Introduction to Non-Conventional Energy</h2>
+                <p class="text-lg leading-relaxed">
+                    Non-conventional energy resources, often called renewable energy, are sources that are naturally replenished on a human timescale. Unlike finite conventional sources like coal and petroleum, they offer a sustainable and environmentally cleaner alternative. The global shift towards these resources is driven by three main factors:
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">Environmental Concerns</h3>
+                        <p>Combustion of fossil fuels releases greenhouse gases (e.g., $CO_2$), driving climate change. Renewables have a minimal carbon footprint.</p>
                     </div>
-
-                    <!-- Unsupervised Learning -->
-                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                        <div class="flex items-center mb-3">
-                            <div class="bg-green-100 text-green-600 rounded-full p-2 mr-4">
-                               <i data-lucide="search-code" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-slate-900">Unsupervised Learning</h3>
-                        </div>
-                        <p class="text-slate-600 mb-4">The algorithm works with an unlabeled dataset to find hidden patterns or structures. There are no correct answers to learn from.</p>
-                        <p class="text-sm font-semibold text-slate-700">Examples: Customer segmentation, anomaly detection.</p>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">Energy Security</h3>
+                        <p>Reduces dependence on foreign fossil fuel imports, enhancing national security and economic stability.</p>
                     </div>
-
-                    <!-- Reinforcement Learning -->
-                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                        <div class="flex items-center mb-3">
-                            <div class="bg-purple-100 text-purple-600 rounded-full p-2 mr-4">
-                               <i data-lucide="gamepad-2" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-slate-900">Reinforcement Learning</h3>
-                        </div>
-                        <p class="text-slate-600 mb-4">An agent learns to make decisions by performing actions in an environment to maximize a cumulative reward. It learns through trial and error.</p>
-                        <p class="text-sm font-semibold text-slate-700">Examples: Game playing (Chess, Go), robotics.</p>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">Sustainability</h3>
+                        <p>Fossil fuels are finite. Renewables provide a long-term energy supply for future generations.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Section 2: Linear Models -->
-            <section id="linear-models" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">2. Linear Models</h2>
-                <p class="mb-8">Linear models are the building blocks of machine learning. They create a decision boundary by making a linear combination of the input features. Let's explore the three key types.</p>
-
-                <!-- Perceptron -->
-                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm mb-8">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4">a) The Perceptron</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <p class="mb-4">The earliest and simplest algorithm for binary classification. It's the conceptual basis for a single neuron. It learns by correcting its mistakes on linearly separable data.</p>
-                            <p class="mb-4"><span class="font-semibold text-slate-800">Mechanism:</span> It calculates a weighted sum of inputs and applies a step function. If the sum `\(z\)` is above a threshold, it outputs 1; otherwise, 0.</p>
-                            <div class="bg-slate-100 p-4 rounded-md">
-                                <p class="font-mono text-sm">Linear Combination: `\(z = \mathbf{w} \cdot \mathbf{x} + b\)`</p>
-                                <p class="mt-2">Activation (Step Function):
-                                    `\[\hat{y} = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{otherwise} \end{cases}\]`
-                                </p>
-                            </div>
-                             <p class="mt-4"><span class="font-semibold text-slate-800">Learning Rule:</span> If a point is misclassified, weights are updated to move the boundary.</p>
-                             <div class="bg-slate-100 p-4 rounded-md">`\(w_{i}(\text{new}) = w_{i}(\text{old}) + \eta(y - \hat{y})x_{i}\)`</div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <!-- SVG Diagram for Perceptron -->
-                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="perceptron-title">
-                                <title id="perceptron-title">Perceptron Diagram</title>
-                                <defs>
-                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b" /></marker>
-                                </defs>
-                                <!-- Inputs -->
-                                <text x="10" y="25" font-size="10" fill="#475569">`\(x_1\)`</text>
-                                <line x1="25" y1="22" x2="75" y2="45" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="50" y="35" font-size="8" fill="#475569">`\(w_1\)`</text>
-                                
-                                <text x="10" y="75" font-size="10" fill="#475569">`\(x_2\)`</text>
-                                <line x1="25" y1="72" x2="75" y2="72" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="50" y="65" font-size="8" fill="#475569">`\(w_2\)`</text>
-                                
-                                <text x="10" y="125" font-size="10" fill="#475569">`\(x_n\)`</text>
-                                <line x1="25" y1="122" x2="75" y2="95" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="50" y="115" font-size="8" fill="#475569">`\(w_n\)`</text>
-                                
-                                <!-- Neuron Body -->
-                                <circle cx="100" cy="75" r="25" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
-                                <text x="95" y="79" font-size="12" fill="#0c4a6e">Σ</text>
-                                
-                                <!-- Activation and Output -->
-                                <rect x="125" y="60" width="30" height="30" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/>
-                                <text x="130" y="80" font-size="10" fill="#0c4a6e">Step</text>
-                                <line x1="155" y1="75" x2="180" y2="75" stroke="#64748b" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="185" y="79" font-size="10" fill="#475569">`\(\hat{y}\)`</text>
-                            </svg>
-                        </div>
-                    </div>
+            <!-- Section: Availability -->
+            <section id="availability" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Availability of Resources</h2>
+                <p class="text-lg leading-relaxed mb-4">
+                    The potential for renewable energy is immense, though it varies geographically. The sun provides more energy in one hour than humanity consumes in a year.
+                </p>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-300">Indian Context</h3>
+                    <p class="text-lg leading-relaxed">India has a rich and diverse renewable energy resource base. As of 2024, India's installed renewable capacity is over 180 GW.</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><strong>Solar:</strong> Excellent potential with 4-7 kWh per sq. meter per day in most regions. A cornerstone of India's energy policy.</li>
+                        <li><strong>Wind:</strong> 4th largest installed capacity globally, with strong potential along coastlines and in states like Gujarat and Tamil Nadu.</li>
+                        <li><strong>Hydropower:</strong> Significant potential in the Himalayan region and other major river systems.</li>
+                        <li><strong>Biomass:</strong> High potential from agricultural residue, supporting rural economies.</li>
+                    </ul>
                 </div>
+            </section>
 
-                <!-- SVM -->
-                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm mb-8">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4">b) Support Vector Machines (SVM)</h3>
-                     <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                           <p class="mb-4">An SVM finds the "best" hyperplane that separates the data by maximizing the **margin**—the distance between the hyperplane and the nearest data points from each class.</p>
-                            <p class="mb-4"><span class="font-semibold text-slate-800">Core Idea:</span> Find the "widest street" that separates the classes. The data points on the edge of this street are called **support vectors**.</p>
-                            <p class="mb-4"><span class="font-semibold text-slate-800">Soft Margin:</span> For non-perfect data, a "soft margin" allows some misclassifications, controlled by a hyperparameter `\(C\)`.</p>
-                             <p class="mb-4"><span class="font-semibold text-slate-800">The Kernel Trick:</span> SVMs can solve non-linear problems by using kernels to project data into a higher dimension where it becomes linearly separable.</p>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <!-- SVG Diagram for SVM -->
-                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="svm-title">
-                                <title id="svm-title">SVM Maximum Margin Diagram</title>
-                                <!-- Margin boundaries -->
-                                <line x1="50" y1="10" x2="150" y2="140" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4"/>
-                                <line x1="20" y1="40" x2="120" y2="170" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4"/>
-                                <!-- Hyperplane -->
-                                <line x1="35" y1="25" x2="135" y2="155" stroke="#8b5cf6" stroke-width="2.5"/>
-                                <!-- Class 1 points -->
-                                <circle cx="70" cy="30" r="5" fill="#f87171"/>
-                                <circle cx="90" cy="50" r="5" fill="#f87171"/>
-                                <circle cx="110" cy="20" r="5" fill="#f87171"/>
-                                <!-- Class 2 points -->
-                                <circle cx="40" cy="110" r="5" fill="#60a5fa"/>
-                                <circle cx="60" cy="130" r="5" fill="#60a5fa"/>
-                                <circle cx="80" cy="100" r="5" fill="#60a5fa"/>
-                                <!-- Support Vectors -->
-                                <circle cx="85" cy="68" r="5" fill="#f87171" stroke="#be123c" stroke-width="2"/>
-                                <circle cx="75" cy="83" r="5" fill="#60a5fa" stroke="#1d4ed8" stroke-width="2"/>
-                                <!-- Margin Arrow -->
-                                <line x1="80" y1="75" x2="90" y2="65" stroke="#475569" stroke-width="1" marker-start="url(#arrowhead)" marker-end="url(#arrowhead)"/>
-                                <text x="95" y="65" font-size="8" fill="#475569">Margin</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+            <!-- Section: Classification -->
+            <section id="classification" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Classification of Non-Conventional Energy</h2>
+                <p class="text-lg leading-relaxed mb-6">Renewable energy sources are classified based on their origin. Here's a visual breakdown of the primary types:</p>
+                 <!-- SVG Diagram for Classification -->
+                <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="bg-gray-800 rounded-lg">
+                    <style>
+                        .node-text { font-family: 'Inter', sans-serif; fill: white; font-size: 16px; text-anchor: middle; }
+                        .center-text { font-size: 20px; font-weight: bold; }
+                        .line { stroke: #4b5563; stroke-width: 2; }
+                    </style>
+                    <!-- Center Node -->
+                    <circle cx="400" cy="200" r="80" fill="#3b82f6"/>
+                    <text x="400" y="200" alignment-baseline="middle" class="node-text center-text">Renewable<tspan x="400" dy="1.2em">Energy</tspan></text>
 
-                <!-- Logistic Regression -->
-                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4">c) Logistic Regression</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                           <p class="mb-4">Despite its name, Logistic Regression is used for classification. It predicts the **probability** that an input belongs to a particular class.</p>
-                           <p class="mb-4"><span class="font-semibold text-slate-800">Mechanism:</span> It calculates a linear combination `\(z\)` and then passes it through the **Sigmoid (or Logistic) function** to squeeze the output between 0 and 1.</p>
-                           <div class="bg-slate-100 p-4 rounded-md">
-                                <p class="font-mono text-sm">Sigmoid Function: `\[ \hat{p} = \sigma(z) = \frac{1}{1 + e^{-z}} \]`</p>
-                           </div>
-                           <p class="mt-4"><span class="font-semibold text-slate-800">Loss Function:</span> It is trained by minimizing **Binary Cross-Entropy Loss**, which penalizes confident but incorrect predictions.</p>
-                           <div class="bg-slate-100 p-4 rounded-md">
-                                `\[L(\hat{y}, y) = -(y \log(\hat{y}) + (1-y) \log(1-\hat{y}))\]`
-                           </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                           <!-- SVG Diagram for Sigmoid -->
-                           <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="sigmoid-title">
-                                <title id="sigmoid-title">Sigmoid Function Curve</title>
-                                <!-- Axes -->
-                                <line x1="10" y1="75" x2="190" y2="75" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="185" y="85" font-size="8" fill="#475569">z</text>
-                                <line x1="100" y1="140" x2="100" y2="10" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
-                                <text x="105" y="20" font-size="8" fill="#475569">`\(\sigma(z)\)`</text>
-                                <!-- Horizontal lines for 0, 0.5, 1 -->
-                                <line x1="95" y1="10" x2="105" y2="10" stroke="#cbd5e1" stroke-width="1" />
-                                <text x="80" y="15" font-size="8" fill="#64748b">1.0</text>
-                                <line x1="95" y1="75" x2="105" y2="75" stroke="#cbd5e1" stroke-width="1" />
-                                <text x="80" y="80" font-size="8" fill="#64748b">0.5</text>
-                                <line x1="95" y1="140" x2="105" y2="140" stroke="#cbd5e1" stroke-width="1" />
-                                <text x="80" y="145" font-size="8" fill="#64748b">0.0</text>
-                                <!-- Sigmoid Curve -->
-                                <path d="M 10 138 C 50 138, 70 20, 100 75 S 150 12, 190 12" stroke="#ec4899" stroke-width="2.5" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Satellite Nodes -->
+                    <g transform="translate(400, 60)">
+                        <line x1="0" y1="0" x2="0" y2="60" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Solar</text>
+                    </g>
+                    <g transform="translate(620, 150)">
+                         <line x1="0" y1="0" x2="-135" y2="30" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Wind</text>
+                    </g>
+                    <g transform="translate(600, 300)">
+                        <line x1="0" y1="0" x2="-120" y2="-75" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Hydro</text>
+                    </g>
+                     <g transform="translate(400, 340)">
+                        <line x1="0" y1="0" x2="0" y2="-60" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Biomass</text>
+                    </g>
+                    <g transform="translate(200, 300)">
+                        <line x1="0" y1="0" x2="120" y2="-75" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Geothermal</text>
+                    </g>
+                    <g transform="translate(180, 150)">
+                        <line x1="0" y1="0" x2="135" y2="30" class="line"/>
+                        <circle cx="0" cy="0" r="45" fill="#1f2937"/>
+                        <text x="0" y="0" alignment-baseline="middle" class="node-text">Ocean</text>
+                    </g>
+                </svg>
             </section>
             
-            <!-- Section 3: Intro to NNs -->
-            <section id="intro-nn" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">3. Intro to Neural Nets: What a Shallow Network Computes</h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="mb-4">A neural network is a collection of interconnected "neurons" organized in layers. A **shallow neural network** has just one **hidden layer** between the input and output layers, but it's powerful enough to learn non-linear relationships.</p>
-                        <p class="mb-2"><span class="font-semibold text-slate-800">Architecture:</span></p>
-                        <ul class="list-disc list-inside space-y-1 mb-4 text-slate-600">
-                            <li><b>Input Layer:</b> Receives raw data features.</li>
-                            <li><b>Hidden Layer:</b> Computes non-linear combinations of inputs. Each neuron acts as a feature detector.</li>
-                            <li><b>Output Layer:</b> Produces the final prediction.</li>
+            <!-- Section: Merits & Demerits -->
+            <section id="merits-demerits" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Relative Merits & Demerits</h2>
+                <div class="overflow-x-auto card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Energy Source</th>
+                                <th>Merits (Advantages)</th>
+                                <th>Demerits (Disadvantages)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-white">Solar</td>
+                                <td class="merit">Abundant, low maintenance, scalable, no emissions.</td>
+                                <td class="demerit">Intermittent, high initial cost, requires large area.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Wind</td>
+                                <td class="merit">Low operating cost, efficient land use, no emissions.</td>
+                                <td class="demerit">Intermittent, noisy, visual impact, remote locations.</td>
+                            </tr>
+                             <tr>
+                                <td class="font-bold text-white">Hydropower</td>
+                                <td class="merit">Reliable, low operating cost, long life, high efficiency.</td>
+                                <td class="demerit">High upfront cost, major environmental/social impact.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Biomass</td>
+                                <td class="merit">Uses waste, dispatchable power, carbon neutral.</td>
+                                <td class="demerit">Can cause deforestation, emits pollutants, land intensive.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Geothermal</td>
+                                <td class="merit">Highly reliable, small footprint, low emissions.</td>
+                                <td class="demerit">Geographically limited, high drilling cost, seismic risk.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section: Solar Cell Theory -->
+            <section id="solar-theory" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Theory of Solar Cells</h2>
+                <p class="text-lg leading-relaxed">
+                    A solar cell (or photovoltaic cell) converts sunlight directly into electricity via the **photovoltaic effect**. This process relies on a semiconductor structure called a **P-N Junction** to create and separate electrical charges.
+                </p>
+
+                <h3>The P-N Junction: Heart of the Cell</h3>
+                <p class="mb-4">A P-N junction creates a built-in electric field. It's formed by joining two types of doped silicon:</p>
+                <ul class="list-disc list-inside space-y-2 mb-6">
+                    <li><strong>N-type Silicon:</strong> Doped with an element like Phosphorus, creating an excess of free electrons (negative charge carriers).</li>
+                    <li><strong>P-type Silicon:</strong> Doped with an element like Boron, creating an abundance of "holes" (positive charge carriers).</li>
+                </ul>
+                 <!-- SVG for P-N Junction -->
+                <svg width="100%" height="250" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" class="bg-gray-800 rounded-lg">
+                    <style>.pn-text{font-family: 'Inter', sans-serif; fill: white; font-size: 16px;}.label{font-size: 14px; fill: #a0aec0;}.arrow{stroke: #f6ad55; stroke-width: 2; marker-end: url(#arrowhead);}</style>
+                    <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7"/></marker></defs>
+                    <!-- P-type -->
+                    <rect x="50" y="50" width="200" height="150" fill="#f87171" fill-opacity="0.3"/>
+                    <text x="150" y="125" text-anchor="middle" class="pn-text font-bold text-3xl">P-Type</text>
+                    <text x="150" y="155" text-anchor="middle" class="pn-text">(Abundant Holes O)</text>
+                    <!-- N-type -->
+                    <rect x="350" y="50" width="200" height="150" fill="#60a5fa" fill-opacity="0.3"/>
+                    <text x="450" y="125" text-anchor="middle" class="pn-text font-bold text-3xl">N-Type</text>
+                    <text x="450" y="155" text-anchor="middle" class="pn-text">(Excess Electrons ●)</text>
+                    <!-- Depletion Region -->
+                    <rect x="250" y="50" width="100" height="150" fill="#4a5568"/>
+                    <text x="300" y="35" text-anchor="middle" class="label">Depletion Region</text>
+                    <!-- Electric Field -->
+                    <line x1="320" y1="180" x2="280" y2="180" class="arrow"/>
+                    <text x="300" y="210" text-anchor="middle" class="label">Internal Electric Field</text>
+                </svg>
+
+                <h3>The Photovoltaic Effect: 3 Key Steps</h3>
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                     <div class="card text-center">
+                        <span class="text-5xl">1️⃣</span>
+                        <h4 class="text-xl font-semibold my-2 text-blue-300">Light Absorption</h4>
+                        <p>A photon with sufficient energy strikes an atom in the silicon, exciting an electron.</p>
+                    </div>
+                     <div class="card text-center">
+                        <span class="text-5xl">2️⃣</span>
+                        <h4 class="text-xl font-semibold my-2 text-blue-300">Charge Generation</h4>
+                        <p>The excited electron jumps to a free state, leaving a "hole" behind. This creates an electron-hole pair.</p>
+                    </div>
+                     <div class="card text-center">
+                        <span class="text-5xl">3️⃣</span>
+                        <h4 class="text-xl font-semibold my-2 text-blue-300">Charge Separation</h4>
+                        <p>The P-N junction's electric field sweeps the electron to the N-side and the hole to the P-side, creating a voltage.</p>
+                    </div>
+                </div>
+                 <!-- SVG of Photovoltaic Effect in action -->
+                <svg width="100%" viewBox="0 0 600 350" class="bg-gray-800 rounded-lg mt-8">
+                    <rect x="1" y="1" width="598" height="348" fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <!-- Top Contact & N-Layer -->
+                    <rect x="50" y="50" width="500" height="20" fill="#9ca3af"/>
+                    <text x="300" y="40" class="label" text-anchor="middle">Front Contact (Negative)</text>
+                    <rect x="50" y="70" width="500" height="50" fill="#60a5fa" fill-opacity="0.5"/>
+                    <text x="530" y="100" class="pn-text">N-Type</text>
+                    <!-- P-N Junction Line -->
+                    <line x1="50" y1="120" x2="550" y2="120" stroke="#cbd5e1" stroke-dasharray="4"/>
+                    <text x="300" y="135" class="label" text-anchor="middle">P-N Junction</text>
+                    <!-- P-Layer & Back Contact -->
+                    <rect x="50" y="120" width="500" height="150" fill="#f87171" fill-opacity="0.5"/>
+                    <text x="530" y="200" class="pn-text">P-Type</text>
+                    <rect x="50" y="270" width="500" height="20" fill="#9ca3af"/>
+                    <text x="300" y="305" class="label" text-anchor="middle">Back Contact (Positive)</text>
+                    
+                    <!-- Photon -->
+                    <text x="150" y="30" style="font-size: 24px;">☀️</text>
+                    <path d="M 160 40 Q 200 80, 250 110" stroke="#facc15" stroke-width="3" fill="none" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <text x="200" y="70" fill="#facc15" font-weight="bold">Photon</text>
+
+                    <!-- Electron-Hole Pair -->
+                    <circle cx="250" cy="115" r="10" fill="#fde047" stroke="white" stroke-width="2">
+                         <animateTransform attributeName="transform" type="scale" from="1" to="1.2" begin="0.5s" dur="0.5s" repeatCount="indefinite" />
+                    </circle>
+                    <text x="280" y="110" class="label">e⁻/h⁺ Pair Created</text>
+                    
+                    <!-- Separation -->
+                    <circle cx="250" cy="115" r="5" fill="#3b82f6"> <!-- Electron -->
+                        <animateMotion path="M 0 0 V -30" begin="1s" dur="2s" fill="freeze" />
+                    </circle>
+                    <circle cx="250" cy="115" r="5" fill="#ef4444" stroke="white" stroke-width="1"> <!-- Hole -->
+                         <animateMotion path="M 0 0 V 100" begin="1s" dur="2s" fill="freeze" />
+                    </circle>
+                    <path d="M 230 150 L 230 180" stroke="white" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <text x="200" y="170" class="label">Hole ➔</text>
+                    <path d="M 270 100 L 270 80" stroke="white" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <text x="280" y="90" class="label">➔ Electron</text>
+                </svg>
+            </section>
+
+            <!-- Section: Solar Materials -->
+            <section id="solar-materials" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Solar Cell Materials</h2>
+                <div class="space-y-8">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">1st Gen: Crystalline Silicon (c-Si)</h3>
+                        <p>Dominates the market. Based on silicon wafers.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li><strong>Monocrystalline (mono-Si):</strong> Highest efficiency (18-24%). Uniform black look. Most expensive.</li>
+                            <li><strong>Polycrystalline (poly-Si):</strong> Lower efficiency (15-20%). Blue, marbled look. Cheaper to produce.</li>
                         </ul>
-                        <p class="mb-4"><span class="font-semibold text-slate-800">Computation (Forward Propagation):</span></p>
-                        <p class="mb-2">1. <b>Input to Hidden:</b> Each hidden neuron `\(h_j\)` calculates its activation:</p>
-                        <div class="bg-slate-100 p-4 rounded-md mb-4">`\(h_j = f(\sum_{i} w_{ij}x_i + b_j)\)`</div>
-                        <p class="mb-2">2. <b>Hidden to Output:</b> The output neuron `\(\hat{y}\)` takes hidden activations as input:</p>
-                        <div class="bg-slate-100 p-4 rounded-md">`\(\hat{y} = g(\sum_{j} v_j h_j + c)\)`</div>
-                        <p class="mt-4 text-indigo-700 bg-indigo-50 p-4 rounded-md">The key is the non-linear activation function `\(f\)` (like ReLU or Sigmoid). Without it, the entire network would just be a simple linear model.</p>
                     </div>
-                    <div class="flex items-center justify-center">
-                        <!-- SVG for Shallow Neural Net -->
-                        <svg viewBox="0 0 200 150" class="w-full h-auto" aria-labelledby="nn-title">
-                            <title id="nn-title">Shallow Neural Network</title>
-                            <!-- Input Layer -->
-                            <text x="10" y="10" font-size="8" fill="#475569">Input</text>
-                            <circle cx="20" cy="40" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
-                            <circle cx="20" cy="75" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
-                            <circle cx="20" cy="110" r="8" fill="#a7f3d0" stroke="#10b981" stroke-width="1.5"/>
-                            <!-- Hidden Layer -->
-                            <text x="85" y="10" font-size="8" fill="#475569">Hidden</text>
-                            <circle cx="100" cy="25" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
-                            <circle cx="100" cy="60" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
-                            <circle cx="100" cy="95" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
-                            <circle cx="100" cy="130" r="10" fill="#bae6fd" stroke="#0ea5e9" stroke-width="1.5"/>
-                            <!-- Output Layer -->
-                            <text x="160" y="10" font-size="8" fill="#475569">Output</text>
-                            <circle cx="180" cy="75" r="8" fill="#fbcfe8" stroke="#ec4899" stroke-width="1.5"/>
-                            <!-- Connections -->
-                            <g stroke="#cbd5e1" stroke-width="0.5">
-                                <line x1="28" y1="40" x2="90" y2="25"/> <line x1="28" y1="40" x2="90" y2="60"/> <line x1="28" y1="40" x2="90" y2="95"/> <line x1="28" y1="40" x2="90" y2="130"/>
-                                <line x1="28" y1="75" x2="90" y2="25"/> <line x1="28" y1="75" x2="90" y2="60"/> <line x1="28" y1="75" x2="90" y2="95"/> <line x1="28" y1="75" x2="90" y2="130"/>
-                                <line x1="28" y1="110" x2="90" y2="25"/> <line x1="28" y1="110" x2="90" y2="60"/> <line x1="28" y1="110" x2="90" y2="95"/> <line x1="28" y1="110" x2="90" y2="130"/>
-                                <line x1="110" y1="25" x2="172" y2="75"/> <line x1="110" y1="60" x2="172" y2="75"/> <line x1="110" y1="95" x2="172" y2="75"/> <line x1="110" y1="130" x2="172" y2="75"/>
-                            </g>
-                        </svg>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">2nd Gen: Thin-Film</h3>
+                        <p>Use thin layers of material. Flexible and lightweight but less efficient.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li><strong>Cadmium Telluride (CdTe):</strong> Most common thin-film. Cost-effective.</li>
+                            <li><strong>Copper Indium Gallium Selenide (CIGS):</strong> Good efficiency, complex manufacturing.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-300">3rd Gen: Emerging Tech</h3>
+                        <p>Mostly in R&D. Focus on high efficiency and low cost.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li><strong>Perovskites:</strong> Rapidly improving efficiency but poor stability.</li>
+                            <li><strong>Organic PV (OPV):</strong> Flexible and cheap, but low efficiency and short lifespan.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Section 4: Training a Network -->
-            <section id="training" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">4. Training a Network</h2>
-                <p class="mb-8">Training a network means finding the optimal values for all its weights and biases to minimize prediction errors. This is an optimization problem solved using three key components.</p>
+            <!-- Section: Array & Power Plant -->
+            <section id="solar-array" class="content-section mb-16">
+                <h2 class="text-3xl font-bold text-white">Solar Array & Power Plant</h2>
                 
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4">a) Loss Functions</h3>
-                        <p>A loss function measures the error between the network's prediction and the true label. The goal of training is to minimize this value.</p>
-                        <div class="mt-4 grid sm:grid-cols-2 gap-4">
-                            <div class="bg-slate-50 p-4 rounded-md">
-                                <h4 class="font-semibold text-slate-800">Mean Squared Error (MSE)</h4>
-                                <p class="text-sm text-slate-600">For regression tasks.</p>
-                                `\[ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]`
-                            </div>
-                            <div class="bg-slate-50 p-4 rounded-md">
-                                <h4 class="font-semibold text-slate-800">Cross-Entropy Loss</h4>
-                                <p class="text-sm text-slate-600">For classification tasks.</p>
-                                `\[ L = -\frac{1}{n} \sum_{i=1}^{n} [y_i \log(\hat{y}_i) + (1-y_i) \log(1-\hat{y}_i)] \]`
-                            </div>
-                        </div>
-                    </div>
+                <h3>From Cell to Array: A Modular System</h3>
+                <p class="text-lg leading-relaxed mb-6">Solar power systems are built by combining smaller units into larger ones to generate usable amounts of power.</p>
+                <!-- SVG Hierarchy -->
+                <svg width="100%" viewBox="0 0 800 200" class="bg-gray-800 rounded-lg">
+                    <style>.item-text{font-family: 'Inter', sans-serif; fill: white; font-size: 18px; text-anchor: middle;}.arrow-text{font-size: 40px; fill: #6b7280;}</style>
+                    <!-- Cell -->
+                    <rect x="50" y="75" width="50" height="50" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="75" y="150" class="item-text">Cell</text>
+                    <text x="140" y="110" class="arrow-text">→</text>
+                    <!-- Module -->
+                    <rect x="200" y="50" width="200" height="100" fill="#1f2937" stroke="#4b5563" stroke-width="2"/>
+                    <path d="M200,100 H400 M250,50 V150 M300,50 V150 M350,50 V150" stroke="#3b82f6"/>
+                    <text x="300" y="175" class="item-text">Module (Panel)</text>
+                    <text x="440" y="110" class="arrow-text">→</text>
+                    <!-- Array -->
+                    <rect x="500" y="25" width="250" height="150" fill="#1f2937" stroke="#4b5563" stroke-width="2"/>
+                    <path d="M500,50 H750 M500,75 H750 M500,100 H750 M500,125 H750 M500,150 H750
+                             M550,25 V175 M600,25 V175 M650,25 V175 M700,25 V175" stroke="#3b82f6" opacity="0.5"/>
+                    <text x="625" y="195" class="item-text">Array</text>
+                </svg>
 
-                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4">b) Backpropagation and Stochastic Gradient Descent (SGD)</h3>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <p class="mb-4"><span class="font-semibold text-slate-800">Gradient Descent:</span> An optimization algorithm used to minimize the loss function. It works by iteratively taking small steps in the opposite direction of the gradient (the direction of steepest ascent).</p>
-                                <p class="mb-4"><span class="font-semibold text-slate-800">Stochastic Gradient Descent (SGD):</span> A faster version of gradient descent that approximates the gradient using a small, random "mini-batch" of data instead of the entire dataset for each step.</p>
-                                <p class="mb-4"><span class="font-semibold text-slate-800">Backpropagation:</span> The core algorithm that efficiently calculates the gradient of the loss with respect to every weight and bias in the network. It uses the chain rule of calculus, working backward from the loss to determine each parameter's contribution to the error.</p>
-                                <div class="bg-slate-100 p-4 rounded-md">Weight Update Rule: `\[ \mathbf{W}_{\text{new}} = \mathbf{W}_{\text{old}} - \eta \nabla_{\mathbf{W}}L \]`
-                                <p class="text-xs text-slate-500 mt-2">Where `\(\eta\)` is the learning rate and `\(\nabla_{\mathbf{W}}L\)` is the gradient.</p>
-                                </div>
-                            </div>
-                             <div class="flex items-center justify-center">
-                                <!-- SVG for Gradient Descent -->
-                               <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="gd-title">
-                                    <title id="gd-title">Gradient Descent Optimization</title>
-                                    <path d="M 10 100 Q 50 120, 100 50 T 190 110" stroke="#a5b4fc" stroke-width="2" fill="none"/>
-                                    <path d="M 10 100 Q 50 120, 100 50" stroke="#818cf8" stroke-width="2" fill="none"/>
-                                    <circle cx="30" cy="105" r="4" fill="#ef4444"/>
-                                    <line x1="30" y1="105" x2="55" y2="90" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                    <circle cx="55" cy="90" r="4" fill="#ef4444"/>
-                                    <line x1="55" y1="90" x2="75" y2="70" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                    <circle cx="75" cy="70" r="4" fill="#ef4444"/>
-                                    <line x1="75" y1="70" x2="90" y2="55" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                    <circle cx="90" cy="55" r="4" fill="#ef4444"/>
-                                    <circle cx="100" cy="50" r="5" fill="#16a34a"/>
-                                    <text x="105" y="48" font-size="8" fill="#16a34a">Minimum Loss</text>
-                                    <text x="10" y="140" font-size="8" fill="#475569">Parameter Space (Weights)</text>
-                                    <text x="10" y="20" font-size="8" fill="#475569" transform="rotate(-90 10,20)">Loss</text>
-                                </svg>
-                            </div>
-                        </div>
+                <h3 class="mt-12">Solar Power Plant Components</h3>
+                <p class="text-lg leading-relaxed mb-4">A large-scale solar farm feeds electricity into the grid. Its key components include:</p>
+                <ul class="list-disc list-inside space-y-2 card">
+                    <li><strong>Solar PV Array:</strong> The core component that captures sunlight.</li>
+                    <li><strong>Mounting Structures:</strong> Can be fixed or use tracking systems to follow the sun.</li>
+                    <li><strong>Inverters:</strong> Convert the DC electricity from panels into grid-compatible AC electricity.</li>
+                    <li><strong>Transformers:</strong> Step up the voltage for efficient long-distance transmission.</li>
+                    <li><strong>Control System:</strong> Monitors performance and manages the plant's operation.</li>
+                </ul>
+            </section>
+            
+            <!-- Section: Limitations -->
+            <section id="limitations" class="content-section">
+                <h2 class="text-3xl font-bold text-white">Limitations of Solar Cells</h2>
+                <p class="text-lg leading-relaxed mb-6">Despite its benefits, solar power faces several challenges that must be considered for widespread adoption.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">Intermittency</h3>
+                        <p>Solar panels only generate power when the sun is shining. No power at night and reduced output on cloudy days.</p>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">Energy Storage</h3>
+                        <p>Requires expensive battery systems to provide a consistent 24/7 power supply, increasing overall project cost.</p>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">High Initial Cost</h3>
+                        <p>Although prices are falling, the upfront investment for panels, inverters, and installation remains significant.</p>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">Land Use</h3>
+                        <p>Large-scale solar farms require vast areas of land, which can compete with agriculture or other land uses.</p>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">Efficiency Limits</h3>
+                        <p>Commercial panel efficiency is typically 17-22%. Much of the sun's energy is lost as heat.</p>
+                    </div>
+                     <div class="card">
+                        <h3 class="text-xl font-semibold mb-2 text-red-300">Manufacturing & Disposal</h3>
+                        <p>Panel production is energy-intensive and can involve hazardous materials. Recycling old panels is an emerging challenge.</p>
                     </div>
                 </div>
             </section>
-            
-            <!-- Section 5: Universal Approximation -->
-            <section id="universal-approx" class="scroll-mt-20">
-                <h2 class="text-3xl font-bold text-slate-900 border-b pb-2 mb-6">5. Neural Networks as Universal Function Approximators</h2>
-                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">The Universal Approximation Theorem</h3>
-                            <p class="mb-4">This is a profound theoretical result. It states that a shallow neural network with a single hidden layer and a non-linear activation function can approximate any continuous function to any desired degree of accuracy, given enough neurons.</p>
-                            <p class="font-semibold text-slate-800 mb-2">Significance:</p>
-                            <ul class="list-disc list-inside space-y-1 mb-4 text-slate-600">
-                                <li>It guarantees that a neural network is powerful enough to learn virtually any complex relationship.</li>
-                                <li>It justifies the use of neural networks for a wide range of problems.</li>
-                                <li>It separates capability (what the network *can* do) from training (how to make it do it).</li>
-                            </ul>
-                            <p class="mt-4 text-indigo-700 bg-indigo-50 p-4 rounded-md"><b>Why go deep?</b> While a shallow network *can* learn any function, it might need an astronomical number of neurons. Deep networks can learn the same functions more efficiently with fewer total neurons by creating a hierarchy of features.</p>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <!-- SVG for Universal Approx -->
-                            <svg viewBox="0 0 200 150" class="w-full h-auto max-w-xs" aria-labelledby="ua-title">
-                                <title id="ua-title">Universal Approximation Diagram</title>
-                                <!-- Target function -->
-                                <path d="M 10 75 C 40 10, 60 140, 100 75 S 160 10, 190 75" stroke="#9ca3af" stroke-width="2" stroke-dasharray="4" fill="none"/>
-                                <text x="130" y="30" font-size="8" fill="#6b7280">True Function</text>
-                                <!-- NN Approximation -->
-                                <path d="M 10 80 L 30 20 L 50 130 L 80 80 L 100 70 L 120 100 L 150 20 L 170 90 L 190 70" stroke="#4f46e5" stroke-width="2.5" fill="none"/>
-                                <text x="20" y="110" font-size="8" fill="#4338ca">NN Approximation</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <footer class="text-center mt-16 py-6 border-t border-slate-200 text-slate-500 text-sm">
-                <p>Study Guide generated for AKTU Deep Learning curriculum.</p>
-            </footer>
-
         </main>
     </div>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // KaTeX auto-rendering
-        document.addEventListener("DOMContentLoaded", function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '\\[', right: '\\]', display: true},
-                    {left: '$', right: '$', display: false},
-                    {left: '\\(', right: '\\)', display: false}
-                ]
-            });
-        });
-
-        // Active navigation link highlighting on scroll
+        // JS for active nav link highlighting on scroll
         const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('#nav-menu a');
+        const navLinks = document.querySelectorAll('#navbar a');
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
+        const options = {
+            root: null, // it is the viewport
+            threshold: 0.5, // 50% of the section must be visible
+            rootMargin: "-50px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            link.classList.add('active');
+                        }
+                    });
                 }
             });
+        }, options);
 
-            navLinks.forEach(link => {
-                link.classList.remove('bg-slate-100', 'text-slate-900', 'font-semibold');
-                const href = link.getAttribute('href').substring(1);
-                if (href === current) {
-                    link.classList.add('bg-slate-100', 'text-slate-900', 'font-semibold');
-                }
-            });
+        sections.forEach(section => {
+            observer.observe(section);
         });
-        
     </script>
 </body>
 </html>
-
-;
