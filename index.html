@@ -217,6 +217,21 @@
                     A solar cell (or photovoltaic cell) converts sunlight directly into electricity via the **photovoltaic effect**. This process relies on a semiconductor structure called a **P-N Junction** to create and separate electrical charges.
                 </p>
 
+                <h3>Solar Cell Cross-Section</h3>
+                <p class="mb-4">A solar cell is made of several layers working together to convert light into electricity.</p>
+                <svg width="100%" height="auto" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" class="bg-gray-800 rounded-lg">
+                    <style>.cs-text{font-family: 'Inter', sans-serif; fill: white; font-size: 14px;}.cs-layer{stroke:#4b5563; stroke-width:1;}.arrow{stroke: #facc15; stroke-width:2; marker-end:url(#cs-arrowhead);}</style>
+                    <defs><marker id="cs-arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7"/></marker></defs>
+                    <path d="M 100 20 L 100 10 L 500 10 L 500 20" fill="none" stroke="#facc15" stroke-width="2" marker-start="url(#cs-arrowhead)" marker-end="url(#cs-arrowhead)"/><text x="300" y="35" text-anchor="middle" class="cs-text">Sunlight</text>
+
+                    <rect x="100" y="50" width="400" height="20" fill="#a0aec0" class="cs-layer"/><text x="300" y="65" text-anchor="middle" class="cs-text">Front Contact (Grid Lines)</text>
+                    <rect x="100" y="70" width="400" height="15" fill="#93c5fd" class="cs-layer"/><text x="300" y="82" text-anchor="middle" class="cs-text">Anti-Reflective Coating</text>
+                    <rect x="100" y="85" width="400" height="40" fill="#60a5fa" fill-opacity="0.6" class="cs-layer"/><text x="300" y="105" text-anchor="middle" class="cs-text">N-Type Silicon</text>
+                    <line x1="100" y1="125" x2="500" y2="125" stroke="#cbd5e1" stroke-dasharray="4" class="cs-layer"/><text x="300" y="135" text-anchor="middle" class="cs-text">P-N Junction</text>
+                    <rect x="100" y="125" width="400" height="80" fill="#f87171" fill-opacity="0.6" class="cs-layer"/><text x="300" y="165" text-anchor="middle" class="cs-text">P-Type Silicon</text>
+                    <rect x="100" y="205" width="400" height="20" fill="#a0aec0" class="cs-layer"/><text x="300" y="220" text-anchor="middle" class="cs-text">Back Contact</text>
+                </svg>
+
                 <h3>The P-N Junction: Heart of the Cell</h3>
                 <p class="mb-4">A P-N junction creates a built-in electric field. It's formed by joining two types of doped silicon:</p>
                 <ul class="list-disc list-inside space-y-2 mb-6">
@@ -236,24 +251,60 @@
                     <line x1="320" y1="180" x2="280" y2="180" class="arrow"/><text x="300" y="210" text-anchor="middle" class="label">Internal Electric Field</text>
                 </svg>
 
-                <h3>The Photovoltaic Effect: 3 Key Steps</h3>
-                <div class="grid md:grid-cols-3 gap-6 mt-8">
-                     <div class="card text-center">
-                        <span class="text-5xl">1️⃣</span>
-                        <h4 class="text-xl font-semibold my-2 text-blue-300">Light Absorption</h4>
-                        <p>A photon with sufficient energy strikes an atom in the silicon, exciting an electron.</p>
-                    </div>
-                     <div class="card text-center">
-                        <span class="text-5xl">2️⃣</span>
-                        <h4 class="text-xl font-semibold my-2 text-blue-300">Charge Generation</h4>
-                        <p>The excited electron jumps to a free state, leaving a "hole" behind. This creates an electron-hole pair.</p>
-                    </div>
-                     <div class="card text-center">
-                        <span class="text-5xl">3️⃣</span>
-                        <h4 class="text-xl font-semibold my-2 text-blue-300">Charge Separation</h4>
-                        <p>The P-N junction's electric field sweeps the electron to the N-side and the hole to the P-side, creating a voltage.</p>
-                    </div>
-                </div>
+                <h3>The Photovoltaic Effect: How it Works</h3>
+                <p class="text-lg leading-relaxed mb-6">Sunlight hitting the p-n junction drives the entire process:</p>
+                <svg width="100%" height="auto" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" class="bg-gray-800 rounded-lg">
+                    <style>
+                        .pv-text { font-family: 'Inter', sans-serif; fill: white; font-size: 14px; }
+                        .pv-step-title { font-size: 16px; font-weight: bold; fill: #93c5fd; }
+                        .pv-arrow { stroke: #d1d5db; stroke-width: 2; marker-end: url(#pv-arrowhead); }
+                        .pn-layer { stroke: #4b5563; stroke-width: 1; }
+                        .photon { fill: #facc15; }
+                        .electron { fill: white; }
+                        .hole { fill: #f87171; stroke:white; stroke-width:0.5;}
+                    </style>
+                    <defs><marker id="pv-arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7"/></marker></defs>
+
+                    <rect x="50" y="80" width="700" height="150" fill="#1f2937" rx="5" ry="5"/>
+                    <rect x="50" y="80" width="700" height="75" fill="#60a5fa" fill-opacity="0.2" class="pn-layer"/>
+                    <rect x="50" y="155" width="700" height="75" fill="#f87171" fill-opacity="0.2" class="pn-layer"/>
+                    <line x1="50" y1="155" x2="750" y2="155" stroke="#cbd5e1" stroke-dasharray="4"/>
+                    <text x="70" y="120" class="pv-text font-semibold">N-Type</text>
+                    <text x="70" y="190" class="pv-text font-semibold">P-Type</text>
+                    <text x="400" y="165" class-="pv-text label" text-anchor="middle">P-N Junction</text>
+
+
+                    <g transform="translate(150,0)">
+                        <text x="0" y="60" class="pv-step-title" text-anchor="middle">1. Light Absorption</text>
+                        <circle cx="0" cy="110" r="8" class="photon"/>
+                        <text x="0" y="90" class="pv-text" text-anchor="middle">Photon</text>
+                        <path d="M 0 118 V 140" stroke="#facc15" stroke-width="2" marker-end="url(#pv-arrowhead)"/>
+                        <circle cx="0" cy="150" r="5" class="hole"/>
+                        <text x="0" y="170" class="pv-text" text-anchor="middle">Atom</text>
+                    </g>
+                    <line x1="250" y1="150" x2="280" y2="150" class="pv-arrow"/>
+
+                    <g transform="translate(400,0)">
+                        <text x="0" y="60" class="pv-step-title" text-anchor="middle">2. Charge Generation</text>
+                        <circle cx="-10" cy="140" r="5" class="electron"/>
+                        <text x="-10" y="120" class="pv-text" text-anchor="middle">e<sup>-</sup></text>
+                        <circle cx="10" cy="170" r="5" class="hole"/>
+                        <text x="10" y="190" class="pv-text" text-anchor="middle">h<sup>+</sup></text>
+                        <text x="0" y="215" class="pv-text" text-anchor="middle">e<sup>-</sup>-h<sup>+</sup> Pair</text>
+                    </g>
+                    <line x1="550" y1="150" x2="580" y2="150" class="pv-arrow"/>
+
+                    <g transform="translate(650,0)">
+                        <text x="0" y="60" class="pv-step-title" text-anchor="middle">3. Charge Separation</text>
+                        <circle cx="0" cy="110" r="5" class="electron"/>
+                        <path d="M 0 110 V 90" stroke="white" stroke-width="2" marker-end="url(#pv-arrowhead)"/>
+                        <text x="-10" y="80" class="pv-text" text-anchor="end">N-Side</text>
+                        
+                        <circle cx="0" cy="170" r="5" class="hole"/>
+                        <path d="M 0 170 V 190" stroke="white" stroke-width="2" marker-end="url(#pv-arrowhead)"/>
+                        <text x="-10" y="210" class="pv-text" text-anchor="end">P-Side</text>
+                    </g>
+                </svg>
             </section>
 
             <section id="solar-materials" class="content-section mb-16">
@@ -300,15 +351,69 @@
                     <rect x="500" y="25" width="250" height="150" fill="#1f2937" stroke="#4b5563" stroke-width="2"/><path d="M500,50 H750 M500,75 H750 M500,100 H750 M500,125 H750 M500,150 H750 M550,25 V175 M600,25 V175 M650,25 V175 M700,25 V175" stroke="#3b82f6" opacity="0.5"/><text x="625" y="195" class="item-text">Array</text>
                 </svg>
 
-                <h3 class="mt-12">Solar Power Plant Components</h3>
-                <p class="text-lg leading-relaxed mb-4">A large-scale solar farm feeds electricity into the grid. Its key components include:</p>
-                <ul class="list-disc list-inside space-y-3 card">
-                    <li><strong>Solar PV Array:</strong> The core component that captures sunlight.</li>
-                    <li><strong>Mounting Structures:</strong> Can be fixed or use tracking systems to follow the sun.</li>
-                    <li><strong>Inverters:</strong> Convert the DC electricity from panels into grid-compatible AC electricity.</li>
-                    <li><strong>Transformers:</strong> Step up the voltage for efficient long-distance transmission.</li>
-                    <li><strong>Control System:</strong> Monitors performance and manages the plant's operation.</li>
-                </ul>
+                <h3 class="mt-12">Solar Power Plant Overview</h3>
+                <p class="text-lg leading-relaxed mb-4">A large-scale solar farm feeds electricity into the grid. Its key components and energy flow are shown below:</p>
+                <svg width="100%" height="auto" viewBox="0 0 900 350" xmlns="http://www.w3.org/2000/svg" class="bg-gray-800 rounded-lg">
+                    <style>
+                        .pp-text { font-family: 'Inter', sans-serif; fill: white; font-size: 14px; text-anchor: middle; }
+                        .pp-comp { fill: #1f2937; stroke: #4b5563; stroke-width: 2; border-radius: 5px;}
+                        .pp-flow-arrow { stroke: #4ade80; stroke-width: 3; marker-end: url(#pp-arrowhead); fill: none;}
+                        .pp-label { fill: #93c5fd; font-weight: bold; font-size: 16px; text-anchor: middle;}
+                    </style>
+                    <defs><marker id="pp-arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7"/></marker></defs>
+
+                    <text x="100" y="50" style="font-size: 30px;">☀️</text>
+                    <text x="100" y="80" class="pp-text">Sunlight</text>
+
+                    <rect x="20" y="100" width="160" height="80" class="pp-comp" rx="5" ry="5"/>
+                    <rect x="30" y="110" width="40" height="30" fill="#3b82f6" opacity="0.6"/>
+                    <rect x="80" y="110" width="40" height="30" fill="#3b82f6" opacity="0.6"/>
+                    <rect x="30" y="145" width="40" height="30" fill="#3b82f6" opacity="0.6"/>
+                    <rect x="80" y="145" width="40" height="30" fill="#3b82f6" opacity="0.6"/>
+                    <text x="100" y="200" class="pp-label">Solar PV Array</text>
+                    <text x="100" y="220" class="pp-text">(DC Power)</text>
+
+                    <path d="M180 140 H 230" class="pp-flow-arrow"/>
+
+                    <rect x="230" y="115" width="120" height="50" class="pp-comp" rx="5" ry="5"/>
+                    <path d="M245 125 H 265 M245 135 H 265 M245 145 H 265" stroke="#4ade80" stroke-width="1.5"/>
+                    <path d="M295 125 H 315 M295 135 H 315 M295 145 H 315" stroke="#facc15" stroke-width="1.5"/>
+                    <text x="290" y="140" class="pp-text">~</text>
+                    <text x="290" y="125" class="pp-text" fill="#4ade80">DC</text>
+                    <text x="290" y="155" class="pp-text" fill="#facc15">AC</text>
+                    <text x="290" y="190" class="pp-label">Inverter</text>
+                    <text x="290" y="210" class="pp-text">(DC to AC)</text>
+
+                    <path d="M350 140 H 400" class="pp-flow-arrow"/>
+
+                    <rect x="400" y="100" width="100" height="80" class="pp-comp" rx="5" ry="5"/>
+                    <text x="450" y="140" class="pp-text font-bold">T</text>
+                    <text x="450" y="200" class="pp-label">Transformer</text>
+                    <text x="450" y="220" class="pp-text">(Voltage Step-Up)</text>
+
+                    <path d="M500 140 H 550" class="pp-flow-arrow"/>
+
+                    <rect x="550" y="115" width="100" height="50" class="pp-comp" rx="5" ry="5"/>
+                    <line x1="560" y1="140" x2="640" y2="140" stroke="#facc15" stroke-width="2"/>
+                    <line x1="560" y1="125" x2="640" y2="125" stroke="#facc15" stroke-width="2"/>
+                    <text x="600" y="190" class="pp-label">Electrical Grid</text>
+                    <text x="600" y="210" class="pp-text">(AC Power)</text>
+
+                    <rect x="700" y="115" width="100" height="50" class="pp-comp" rx="5" ry="5"/>
+                    <circle cx="750" cy="140" r="15" fill="#facc15"/><text x="750" y="144" font-size="12" fill="#111827" text-anchor="middle">💡</text>
+                    <text x="750" y="190" class="pp-label">Load</text>
+                    <text x="750" y="210" class="pp-text">(Homes, Industry)</text>
+
+                     <path d="M650 140 H 700" class="pp-flow-arrow"/>
+
+                     <rect x="300" y="260" width="150" height="50" class="pp-comp" rx="5" ry="5"/>
+                     <rect x="310" y="270" width="20" height="30" fill="#f87171"/><rect x="335" y="270" width="20" height="30" fill="#f87171"/>
+                     <line x1="365" y1="285" x2="385" y2="285" stroke="#d1d5db" stroke-width="2" marker-end="url(#pp-arrowhead)"/>
+                     <text x="375" y="320" class="pp-label">Battery Storage</text>
+
+                     <path d="M290 170 V 260 H 300" class="pp-flow-arrow"/>
+                     <path d="M450 285 H 375 V 170 H 290" class="pp-flow-arrow" style="stroke-dasharray: 5,5;"/>
+                </svg>
             </section>
             
             <section id="limitations" class="content-section">
@@ -333,8 +438,8 @@
 
             const options = {
                 root: null,
-                threshold: 0.3, // Section is active if 30% is visible
-                rootMargin: "-15% 0px -50% 0px" // Activation area is in the upper part of the screen
+                threshold: 0.3,
+                rootMargin: "-15% 0px -50% 0px"
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
